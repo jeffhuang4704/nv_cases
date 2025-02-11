@@ -9,6 +9,11 @@
 
 ```
 
+<details><summary>controller#1 log</summary>
+
+```diff
+! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86
+```
 
 ```
 neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1 - check this first)
@@ -74,3 +79,5 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1 - check this first)
 2025-01-26T13:10:27.762Z [ERROR] agent: yamux: Failed to write header: write tcp 10.42.60.190:40453->10.42.55.36:18300: use of closed network connection
 2025-01-26T13:10:30|MON|Process ctrl exit status -1, pid=19402
 ```
+
+</details>
