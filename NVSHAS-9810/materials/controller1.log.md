@@ -16,8 +16,9 @@
 ! Full log, see below link
 ```
 
-[controller#1](./controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
+[full controller#1 log](./controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
 
+### excerpt controller#1 log
 ```
 neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1 - check this first)
 ====================================================
