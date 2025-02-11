@@ -106,12 +106,13 @@ Controller log files (time range)
 ```
 
 ### full controller#1 log
+
     [full controller#1 log](./controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
 
 ### excerpt controller#1 log
 
 ```
-neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1 - check this first)
+neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
 ====================================================
 2025-01-26T13:09:02.525|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0009381:6596a768-fb27-457f-8c3f-a37b220da290 id=4cafd2b5afb5d9f0c652783ac7c8b5a7e41295b9220d85687a880d9db227e2db
 2025-01-26T13:09:02.774|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0003320:df3b39de-ca8e-4378-9092-665947d3f873 id=24f3f72d9753c44038a6de5b0a1f9c2a0daca6775e2e4373f04f2759504cb469
@@ -171,19 +172,18 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1 - check this first)
 2025-01-26T13:10:47.364Z [ERROR] agent.server: error performing anti-entropy sync of federation state: error="context canceled"
 
 ( 🟢 start looping 🅰️ => 🅱️...)
-2025-02-02T22:20:02.759Z [ERROR] agent: Coordinate update error: error="No cluster leader"
+🅰️ 2025-02-02T22:20:02.759Z [ERROR] agent: Coordinate update error: error="No cluster leader"
 2025-02-02T22:20:06.935Z [ERROR] agent.server.rpc: rejecting RPC conn from because rpc_max_conns_per_client exceeded: conn=from=10.42.55.36:46317
 2025-02-02T22:20:12.254Z [ERROR] agent.server.rpc: rejecting RPC conn from because rpc_max_conns_per_client exceeded: conn=from=10.42.55.36:38839
-2025-02-02T22:20:20.871Z [ERROR] agent.server.rpc: rejecting RPC conn from because rpc_max_conns_per_client exceeded: conn=from=10.42.55.36:35543
+🅱️ 2025-02-02T22:20:20.871Z [ERROR] agent.server.rpc: rejecting RPC conn from because rpc_max_conns_per_client exceeded: conn=from=10.42.55.36:35543
 ( 🟢 repeated...) (88736 hits)
 
 ```
 
-
-
 ### Perf Snapshot
 
-Controller process exist one minute after perf snapsho was taken..
+The controller process exits one minute after the performance snapshot is taken. Therefore, the snapshot below should be valuable.
+The diagram below shows these snapshot timestamps, with the last one indicating that memory usage reached 109GB.
 
 ```
 2025-01-26T13:09:16.161|INFO|CTL|utils.PerfSnapshot.func1: - at=2025-01-26 13:09:16.157645427 +0000 UTC m=+422425.720579844 label=p memLimit=6442450944 pid=1 prefix=ctl. profileLimit=1 workFolder=/var/nv_debug/snapshot/a47f288af60c8107802c69f24557cbc2b76bb1b9b8ff5c5b8941e175aa17ef0f workingSet=109572132864   🔴 🔴 perf snapshot available 🔴 🔴 
@@ -195,6 +195,7 @@ Controller process exist one minute after perf snapsho was taken..
 <p align="center">
   <img src="./materials/controller-node1-perf1.png" width="90%">
 </p>
+
 
 </details>
 
