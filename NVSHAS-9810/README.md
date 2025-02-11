@@ -73,6 +73,8 @@ neuvector-updater-pod-28974240-2ct8c                 0/1     Completed          
 neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          0                  9h
 ```
 
+</details>
+
 -- node#1: neuvector-controller-pod-854b7c7d46-fhw25.log
 -- node#2: neuvector-controller-pod-854b7c7d46-nktdw.log
 -- node#3: neuvector-controller-pod-854b7c7d46-rwcxp.log
