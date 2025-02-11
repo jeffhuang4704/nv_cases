@@ -3,8 +3,9 @@
 ###
 
 ```
-\e[31mThis is red text\e[0m
-\e[34mThis is blue text\e[0m
+🔴 Red Text  
+🔵 Blue Text  
+🟢 Green Text  
 
 ```
 
