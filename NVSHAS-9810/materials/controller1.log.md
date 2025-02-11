@@ -9,16 +9,18 @@
 
 ```
 
-<details><summary>excerpt controller#1 log</summary>
+<details><summary>controller#1 log</summary>
 
 ```diff
 ! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86
 ! Full log, see below link
 ```
 
+### full controller#1 log
 [full controller#1 log](./controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
 
 ### excerpt controller#1 log
+
 ```
 neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1 - check this first)
 ====================================================
@@ -31,7 +33,7 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1 - check this first)
 2025-01-26T13:09:13.061Z [ERROR] agent.server.raft: peer has newer term, stopping replication: peer="{Nonvoter e502f51a-8d52-6c56-1869-76bb11b32c51 10.42.55.36:18300}"
 2025-01-26T13:09:15.004|INFO|CTL|cluster.StartCluster.func2: Lead elected - lead=10.42.60.190:18300
 2025-01-26T13:09:15.771|INFO|CTL|cluster.StartCluster.func1: - newLead=10.42.60.190 oldLead=
-2025-01-26T13:09:16.161|INFO|CTL|utils.PerfSnapshot.func1: - at=2025-01-26 13:09:16.157645427 +0000 UTC m=+422425.720579844 label=p memLimit=6442450944 pid=1 prefix=ctl. profileLimit=1 workFolder=/var/nv_debug/snapshot/a47f288af60c8107802c69f24557cbc2b76bb1b9b8ff5c5b8941e175aa17ef0f workingSet=109572132864
+2025-01-26T13:09:16.161|INFO|CTL|utils.PerfSnapshot.func1: - at=2025-01-26 13:09:16.157645427 +0000 UTC m=+422425.720579844 label=p memLimit=6442450944 pid=1 prefix=ctl. profileLimit=1 workFolder=/var/nv_debug/snapshot/a47f288af60c8107802c69f24557cbc2b76bb1b9b8ff5c5b8941e175aa17ef0f workingSet=109572132864   🔴 🔴 perf snapshot available 🔴 🔴 
 2025-01-26T13:09:16.163|INFO|CTL|system.(*SystemTools).CGroupMemoryStatReset: - threshold=4831838208 usage=109572907008
 2025-01-26T13:09:20.055Z [ERROR] agent.http: Request error: method=GET url="/v1/kv/lock/policy?consistent=&index=710787498" from=127.0.0.1:40852 error="node is not the leader"
 2025-01-26T13:09:19.946|INFO|CTL|cluster.StartCluster.func1: - newLead= oldLead=10.42.60.190
@@ -86,8 +88,19 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1 - check this first)
 2025-02-02T22:20:20.871Z [ERROR] agent.server.rpc: rejecting RPC conn from because rpc_max_conns_per_client exceeded: conn=from=10.42.55.36:35543
 ( 🟢 repeated...) (88736 hits)
 
+```
+
+</details>
+
+
+### Perf Snapshot
+
+Controller process exist one minute after perf snapsho was taken..
+
+```
+2025-01-26T13:09:16.161|INFO|CTL|utils.PerfSnapshot.func1: - at=2025-01-26 13:09:16.157645427 +0000 UTC m=+422425.720579844 label=p memLimit=6442450944 pid=1 prefix=ctl. profileLimit=1 workFolder=/var/nv_debug/snapshot/a47f288af60c8107802c69f24557cbc2b76bb1b9b8ff5c5b8941e175aa17ef0f workingSet=109572132864   🔴 🔴 perf snapshot available 🔴 🔴 
+
+2025-01-26T13:10:30|MON|Process ctrl exit status -1, pid=19402   ❌❌❌
 
 ```
 
-
-</details>

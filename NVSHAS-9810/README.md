@@ -102,6 +102,12 @@ node#3: neuvector-controller-pod-854b7c7d46-rwcxp.log
 
 </details>
 
+<p align="center">
+  <img src="./materials/controller-node1-perf1.png" width="90%">
+</p>
+
+
 ### Findings
+
 
 ### Plans
