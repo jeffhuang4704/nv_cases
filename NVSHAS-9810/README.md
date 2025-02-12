@@ -7,7 +7,7 @@
 - [Section 2: Materias we have](#section-2-design)
 - [Section 3: Controller#1 log excerpt](#section-2-design)
 - [Section 4: Controller#1 perf snapshot](#section-3-security)
-- [Section 5: Findings](#section-3-security)
+- [Section 5: Finding](#section-3-security)
 - [Section 6: Plan](#section-3-security)
 
 ### Section 1: Case description
@@ -330,7 +330,7 @@ Time: Jan 26, 2025 at 5:09am (PST)
 
 </details>
 
-### Section 4: Findings
+### Section 5: Finding
 
 If we examine the first several hours of logs, a repeating log entry `cache.AgentAdmissionRequest: Receive connect request` appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex.
 
@@ -370,7 +370,7 @@ func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmission
 
 </details>
 
-### Section 5: Plan
+### Section 6: Plan
 
 Although we know there is a locking issue, addressing it is quite challenging due to the design and usage of the `cacheMutex` lock. It spans multiple mechanisms (gRPC, REST API, timers, Kubernetes watchers, etc.) and involves nested usage. Reviewing, reproducing, and testing it is a time-consuming task with no guarantee of success.
 
