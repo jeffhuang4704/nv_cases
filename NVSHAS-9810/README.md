@@ -83,7 +83,7 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 
 </details>
 
-### full controller log
+<details><summary>full controller log</summary>
 
 [full controller#1 log](./materials/controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
 ```diff
@@ -101,8 +101,9 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 ! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86  <<=======change
 ```
 
-<details><summary>excerpt controller#1 log</summary>
+</details>
 
+<details><summary>excerpt controller#1 log</summary>
 
 ```
 neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
