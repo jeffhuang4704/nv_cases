@@ -216,12 +216,15 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
 The controller process exits one minute after the performance snapshot is taken. Therefore, the snapshot below should be valuable.
 The diagram below shows these snapshot timestamps, with the last one indicating that memory usage reached 109GB.
 
+<details><summary>expand to view</summary>
+
 ```
 2025-01-26T13:09:16.161|INFO|CTL|utils.PerfSnapshot.func1: - at=2025-01-26 13:09:16.157645427 +0000 UTC m=+422425.720579844 label=p memLimit=6442450944 pid=1 prefix=ctl. profileLimit=1 workFolder=/var/nv_debug/snapshot/a47f288af60c8107802c69f24557cbc2b76bb1b9b8ff5c5b8941e175aa17ef0f workingSet=109572132864   🔴 🔴 perf snapshot available 🔴 🔴 
 
 2025-01-26T13:10:30|MON|Process ctrl exit status -1, pid=19402   ❌❌❌
-
 ```
+
+</details>
 
 **data.json and memory pprof**
 
