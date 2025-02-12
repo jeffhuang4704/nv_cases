@@ -334,6 +334,8 @@ Time: Jan 26, 2025 at 5:09am (PST)
 
 If we examine the first several hours of logs, a repeating log entry `cache.AgentAdmissionRequest: Receive connect request` appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex.
 
+<details><summary>log</summary>
+
 ```
 
 2025-01-26T13:09:02.525|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0009381:6596a768-fb27-457f-8c3f-a37b220da290 id=4cafd2b5afb5d9f0c652783ac7c8b5a7e41295b9220d85687a880d9db227e2db
@@ -343,8 +345,11 @@ If we examine the first several hours of logs, a repeating log entry `cache.Agen
 .... 🟢 (28034 hits) "cache.AgentAdmissionRequest: Receive connect request", then different kind of error start to occur
 
 ```
+</details>
 
 **AgentAdmissionRequest() code**
+
+<details><summary>view AgentAdmissionRequest()</summary>
 
 ```
 func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmissionResponse {
@@ -361,8 +366,9 @@ func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmission
 
 	...... (omitted)
 }
-
 ```
+
+</details>
 
 ### Section 5: Plan
 
