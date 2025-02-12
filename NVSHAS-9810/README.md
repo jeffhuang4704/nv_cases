@@ -5,9 +5,10 @@
 
 - [Section 1: Case description](#section-1-overview)
 - [Section 2: Materias we have](#section-2-design)
-- [Section 3: Controller#1 perf snapshots](#section-3-security)
-- [Section 4: Findings](#section-3-security)
-- [Section 5: Plan](#section-3-security)
+- [Section 3: Controller#1 log excerpt](#section-2-design)
+- [Section 4: Controller#1 perf snapshot](#section-3-security)
+- [Section 5: Findings](#section-3-security)
+- [Section 6: Plan](#section-3-security)
 
 ### Section 1: Case description
 
@@ -84,7 +85,7 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 
 </details>
 
-<details><summary>full controller log</summary>
+<details><summary>controller log</summary>
 
 [full controller#1 log](./materials/controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
 ```diff
@@ -135,9 +136,9 @@ neuvector-controller-pod-854b7c7d46-rwcxp
 </details>
 
 
-### Section 3: Controller#1 perf snapshots
+### Section 3: Controller#1 log excerpt
 
-<details><summary>excerpt controller#1 log</summary>
+<details><summary>expand to see excerpt log</summary>
 
 ```
 neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
@@ -210,7 +211,7 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
 
 </details>
 
-### Perf Snapshots (controller#1)
+### Section 4: Controller#1 perf snapshot
 
 The controller process exits one minute after the performance snapshot is taken. Therefore, the snapshot below should be valuable.
 The diagram below shows these snapshot timestamps, with the last one indicating that memory usage reached 109GB.
@@ -222,15 +223,21 @@ The diagram below shows these snapshot timestamps, with the last one indicating 
 
 ```
 
-#### data.json and memory pprof
+**data.json and memory pprof**
+
+<details><summary>expand to view</summary>
 
 <p align="center">
   <img src="./materials/controller-node1-perf1.png" width="90%">
 </p>
 
-#### goroutines pprof
+</details>
+
+**goroutines pprof**
 
 [full goroutine trace stack](./materials/controller-node1-goroutines.txt)
+
+<details><summary>go tool pprof -text ctl.goroutine.prof</summary>
 
 ```
 jeff@SUSE-387793:~/9810 ()$ go tool pprof -text ctl.goroutine.prof
@@ -317,6 +324,8 @@ Time: Jan 26, 2025 at 5:09am (PST)
              google.golang.org/grpc.(*Server).handleStream
              google.golang.org/grpc.(*Server).serveStreams.func2.1
 ```
+
+</details>
 
 ### Section 4: Findings
 
