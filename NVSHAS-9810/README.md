@@ -302,4 +302,13 @@ func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmission
 
 ```
 
-### Plans
+### Plan
+
+Although we know there is a locking issue, it is quite challenging due to the design and usage of the cacheMutex lock. It spans multiple mechanisms (gRPC, REST API, timers, Kubernetes watchers, etc.) and involves nested usage. Reviewing it is a time-consuming task with no guarantee of success.
+
+This is not the only locking issue—I have seen a few cases before, but none of them had a proper fix.
+
+I believe we should still invest time in this issue, though I don’t expect a major design overhaul since the current implementation is unlikely to be reused in any form. And we are about to start a new version very soon.
+
+In the short term, I’m considering leveraging Kubernetes' `Liveness Probe` to mitigate the impact when a deadlock occurs.
+
