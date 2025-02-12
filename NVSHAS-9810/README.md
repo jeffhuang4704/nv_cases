@@ -176,6 +176,8 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
 
 ```
 
+</details>
+
 ### Perf Snapshots (controller#1)
 
 The controller process exits one minute after the performance snapshot is taken. Therefore, the snapshot below should be valuable.
@@ -283,8 +285,6 @@ Time: Jan 26, 2025 at 5:09am (PST)
              google.golang.org/grpc.(*Server).handleStream
              google.golang.org/grpc.(*Server).serveStreams.func2.1
 ```
-</details>
-
 
 ### Findings
 
