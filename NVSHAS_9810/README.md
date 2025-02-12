@@ -328,6 +328,16 @@ Time: Jan 26, 2025 at 5:09am (PST)
              google.golang.org/grpc.(*Server).serveStreams.func2.1
 ```
 
+<p align="center">
+  <img src="./materials/pprof1.png" width="90%">
+</p>
+
+
+<p align="center">
+  <img src="./materials/pprof2.png" width="90%">
+</p>
+
+
 </details>
 
 ### Section 5: Finding
