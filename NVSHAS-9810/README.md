@@ -11,7 +11,7 @@
 
 ### Section 1: Case description
 
-The customer reported that NeuVector UI is not loading. This is an installation running for a long time and this customer reported before that controller pods got stuck and it is required to scale down and scale up the controller deployment to recover from failure.
+The customer reported that NeuVector UI is not loading. This is an installation running for a long time and this customer reported before that controller pods got stuck and it is required to scale down and scale up the controller deployment to recover from failure. [NVSHAS-9810](https://jira.suse.com/browse/NVSHAS-9810?filter=-1)
 
 ### Section 2: Materias we have
 
@@ -103,6 +103,37 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 ```
 
 </details>
+
+<details><summary>perf snapshots</summary>
+
+The snapshot files can be downloaded from the Jira case with the filename `2025-02-07.tgz`. Below are the timestamps when the snapshots were taken.
+
+```
+neuvector-controller-pod-854b7c7d46-fhw25
+snapshot timestamp
+  "RecordedAt": "2025-01-21T20:44:16.167132242Z",
+  "RecordedAt": "2025-01-25T05:34:16.207035284Z",
+  "RecordedAt": "2025-01-25T17:59:16.131816511Z",
+  "RecordedAt": "2025-01-25T18:14:16.130757816Z",
+  "RecordedAt": "2025-01-26T13:09:16.157645427Z",
+
+neuvector-controller-pod-854b7c7d46-nktdw
+  "RecordedAt": "2025-01-26T12:30:30.489388258Z",
+  "RecordedAt": "2025-01-26T13:17:34.514613582Z",
+  "RecordedAt": "2025-01-26T17:00:30.095198067Z",
+  "RecordedAt": "2025-01-26T21:00:30.094440323Z",
+  "RecordedAt": "2025-02-04T15:30:30.093850346Z",
+
+neuvector-controller-pod-854b7c7d46-rwcxp
+  "RecordedAt": "2025-01-08T15:42:32.931443018Z",
+  "RecordedAt": "2025-01-13T08:42:33.067489621Z",
+  "RecordedAt": "2025-01-14T00:07:32.92936976Z",
+  "RecordedAt": "2025-01-14T00:17:32.929627915Z",
+  "RecordedAt": "2025-01-14T12:12:32.929189402Z",
+```
+
+</details>
+
 
 ### Section 3: Controller#1 perf snapshots
 
