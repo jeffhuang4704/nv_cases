@@ -292,9 +292,7 @@ Time: Jan 26, 2025 at 5:09am (PST)
 
 ### Findings
 
-From the goroutine pprof file, it seems cacheMutexLock is quite suspicious.
-
-If we look the initial several hours of log, a repeating log entry "cache.AgentAdmissionRequest: Receive connect request" shows 28000+ times.
+If we examine the first several hours of logs, a repeating log entry cache.AgentAdmissionRequest: Receive connect request appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex.
 
 ```
 
@@ -306,7 +304,7 @@ If we look the initial several hours of log, a repeating log entry "cache.AgentA
 
 ```
 
-#### AgentAdmissionRequest()
+**AgentAdmissionRequest() code**
 
 ```
 func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmissionResponse {
@@ -315,7 +313,7 @@ func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmission
 	}).Info("Receive connect request")      ✔️
 
 	
-	cacheMutexLock()
+	cacheMutexLock()      ⚠️⚠️⚠️
         ...... (omitted)
 	cacheMutexUnlock()
 
