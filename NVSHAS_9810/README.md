@@ -389,7 +389,7 @@ func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmission
 
 ### Section 6: Plan
 
-Although we know there is a locking issue, addressing it is quite challenging due to the design and usage of the `cacheMutex` lock. It spans multiple mechanisms (gRPC, REST API, timers, Kubernetes watchers, etc.) and involves nested usage. Reviewing, reproducing, and testing it is a time-consuming task with no guarantee of success.
+Although we know there is a locking issue, addressing it is quite challenging due to the design and usage of the `cacheMutex` lock. It spans multiple mechanisms (gRPC, REST API, timers, Consul, Admission Control, Kubernetes watchers, etc.) and involves nested usage. Reviewing, reproducing, and testing it is a time-consuming task with no guarantee of success.
 
 I have encountered similar cases before, but none of them had a proper fix.
 
