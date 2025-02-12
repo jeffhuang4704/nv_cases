@@ -330,6 +330,9 @@ Time: Jan 26, 2025 at 5:09am (PST)
 
 </details>
 
+[memory prof web view](./materials/controller_inuse_space.html)
+[goroutins prof web view](./materials/controller_goroutine.html)
+
 ### Section 5: Finding
 
 If we examine the first several hours of logs, a repeating log entry `cache.AgentAdmissionRequest: Receive connect request` appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex.
