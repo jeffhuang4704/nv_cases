@@ -180,7 +180,7 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
 
 ```
 
-### Perf Snapshot
+### Perf Snapshots
 
 The controller process exits one minute after the performance snapshot is taken. Therefore, the snapshot below should be valuable.
 The diagram below shows these snapshot timestamps, with the last one indicating that memory usage reached 109GB.
@@ -192,11 +192,15 @@ The diagram below shows these snapshot timestamps, with the last one indicating 
 
 ```
 
+#### data.json and memory pprof
+
 <p align="center">
   <img src="./materials/controller-node1-perf1.png" width="90%">
 </p>
 
 #### goroutines pprof
+
+[full goroutine trace stack](./materials/controller-node1-goroutines.txt)
 
 ```
 jeff@SUSE-387793:~/9810 ()$ go tool pprof -text ctl.goroutine.prof
@@ -244,10 +248,80 @@ Dropped 188 nodes (cum <= 951)
          0     0%   100%     140038 73.57%  sync.runtime_SemacquireRWMutexR
 ```
 
+```
+(pprof) traces
+File: controller
+Build ID: 8e4a9eaa132d21184fce30c3c89953b62cd85187
+Type: goroutine
+Time: Jan 26, 2025 at 5:09am (PST)
+-----------+-------------------------------------------------------
+    128846   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock       👈 🔴
+             github.com/neuvector/neuvector/controller/cache.CacheMethod.GetHostCount
+             main.(*ControllerAgentService).ReportConnections
+             github.com/neuvector/neuvector/share._ControllerAgentService_ReportConnections_Handler.func1
+             github.com/neuvector/neuvector/share/cluster.middlefunc
+             github.com/neuvector/neuvector/share._ControllerAgentService_ReportConnections_Handler
+             google.golang.org/grpc.(*Server).processUnaryRPC
+             google.golang.org/grpc.(*Server).handleStream
+             google.golang.org/grpc.(*Server).serveStreams.func2.1
+-----------+-------------------------------------------------------
+     47501   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireMutex
+             sync.(*Mutex).lockSlow
+             sync.(*Mutex).Lock (inline)
+             sync.(*RWMutex).Lock
+             github.com/neuvector/neuvector/controller/cache.cacheMutexLock         👈 🔴
+             github.com/neuvector/neuvector/controller/cache.AgentAdmissionRequest
+             main.(*ControllerAgentService).RequestAdmission
+             github.com/neuvector/neuvector/share._ControllerAgentService_RequestAdmission_Handler.func1
+             github.com/neuvector/neuvector/share/cluster.middlefunc
+             github.com/neuvector/neuvector/share._ControllerAgentService_RequestAdmission_Handler
+             google.golang.org/grpc.(*Server).processUnaryRPC
+             google.golang.org/grpc.(*Server).handleStream
+             google.golang.org/grpc.(*Server).serveStreams.func2.1
+```
 </details>
 
 
 ### Findings
 
+From the goroutine pprof file, it seems cacheMutexLock is quite suspicious.
+
+If we look the initial several hours of log, a repeating log entry "cache.AgentAdmissionRequest: Receive connect request" shows 28000+ times.
+
+
+2025-01-26T13:09:02.525|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0009381:6596a768-fb27-457f-8c3f-a37b220da290 id=4cafd2b5afb5d9f0c652783ac7c8b5a7e41295b9220d85687a880d9db227e2db
+2025-01-26T13:09:02.774|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0003320:df3b39de-ca8e-4378-9092-665947d3f873 id=24f3f72d9753c44038a6de5b0a1f9c2a0daca6775e2e4373f04f2759504cb469
+2025-01-26T13:09:02.907|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0003838:8d69c1bb-9e4f-409a-833f-1e094b83e862 id=6dcbd878342919c72f61f2b40434384198ee273001e5031a2d52c579d3ea44bd
+2025-01-26T13:09:04.439|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0003322:a38626a4-a970-431f-b66d-465829643591 id=91221f7ce111344774649459e3dacaace11229cb34483091353e72fd020f6bd5
+.... 🟢 (28034 hits) "cache.AgentAdmissionRequest: Receive connect request", then different kind of error start to occur
+
+
+#### AgentAdmissionRequest()
+
+```
+func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmissionResponse {
+	log.WithFields(log.Fields{
+		"host": req.HostID, "id": req.ID,
+	}).Info("Receive connect request")      👈
+
+	
+	cacheMutexLock()
+        ...... (omitted)
+	cacheMutexUnlock()
+
+	log.WithFields(log.Fields{"host": req.HostID, "id": req.ID, "allowed": allowConnect, "online": onlineEnforcers}).Info() ❓❓
+
+	...... (omitted)
+}
+
+```
 
 ### Plans
