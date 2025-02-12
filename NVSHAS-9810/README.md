@@ -3,16 +3,17 @@
 
 ## Table of Contents
 
-- [Section 1: Overview](#section-1-overview)
-- [Section 2: Design](#section-2-design)
-- [Section 3: Security](#section-3-security)
+- [Section 1: Case description](#section-1-overview)
+- [Section 2: Materias we have](#section-2-design)
+- [Section 3: Controller#1 perf snapshots](#section-3-security)
+- [Section 4: Findings](#section-3-security)
+- [Section 5: Plan](#section-3-security)
 
-
-### Case description
+### Section 1: Case description
 
 The customer reported that NeuVector UI is not loading. This is an installation running for a long time and this customer reported before that controller pods got stuck and it is required to scale down and scale up the controller deployment to recover from failure.
 
-### Materias we have
+### Section 2: Materias we have
 
 <details><summary>NV pods status</summary>
 
@@ -103,7 +104,7 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 
 </details>
 
-### excerpt log (controller#1)
+### Section 3: Controller#1 perf snapshots
 
 <details><summary>excerpt controller#1 log</summary>
 
@@ -286,7 +287,7 @@ Time: Jan 26, 2025 at 5:09am (PST)
              google.golang.org/grpc.(*Server).serveStreams.func2.1
 ```
 
-### Findings
+### Section 4: Findings
 
 If we examine the first several hours of logs, a repeating log entry `cache.AgentAdmissionRequest: Receive connect request` appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex.
 
@@ -320,7 +321,7 @@ func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmission
 
 ```
 
-### Plan
+### Section 5: Plan
 
 Although we know there is a locking issue, addressing it is quite challenging due to the design and usage of the `cacheMutex` lock. It spans multiple mechanisms (gRPC, REST API, timers, Kubernetes watchers, etc.) and involves nested usage. Reviewing, reproducing, and testing it is a time-consuming task with no guarantee of success.
 
