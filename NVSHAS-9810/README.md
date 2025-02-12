@@ -75,28 +75,6 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 
 </details>
 
--- node#1: neuvector-controller-pod-854b7c7d46-fhw25.log
--- node#2: neuvector-controller-pod-854b7c7d46-nktdw.log
--- node#3: neuvector-controller-pod-854b7c7d46-rwcxp.log
-
-
-Controller log files (time range)
-```
-// #1 log time range
-2025-01-26T04:50:44.156|INFO|CTL|cache.CacheMethod.MatchK8sAdmissionRules: first image summary - Image=registry-push.idst.ibaintern.de:5002/istio-ipdt/proxyv2:1.22.6-distroless digest= imageID=
-(to)
-2025-02-03T09:24:45.864Z [ERROR] agent: Coordinate update error: error="No cluster leader"
-
-// #2 log time range
-2025-02-03T09:16:11.05 |ERRO|CTL|kv.clusterHelper.AcquireLock: Acquire lock error - error=failed to create session: Unexpected response code: 500 (No cluster leader) key=lock/policy
-(to)
-2025-02-03T09:24:52.947|ERRO|CTL|rest.(*WebhookServer).validate: cacheAdmCtrlAudit - error=Queue full
-
-// #3 log time range
-2025-01-27T14:46:47.791Z [ERROR] agent.server.rpc: rejecting RPC conn from because rpc_max_conns_per_client exceeded: conn=from=10.42.55.36:50201
-(to)
-2025-02-03T09:24:55.564Z [ERROR] agent.server.rpc: rejecting RPC conn from because rpc_max_conns_per_client exceeded: conn=from=10.42.55.36:53457
-```
 
 <details><summary>controller#1 log</summary>
 
@@ -292,7 +270,7 @@ Time: Jan 26, 2025 at 5:09am (PST)
 
 ### Findings
 
-If we examine the first several hours of logs, a repeating log entry cache.AgentAdmissionRequest: Receive connect request appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex.
+If we examine the first several hours of logs, a repeating log entry `cache.AgentAdmissionRequest: Receive connect request` appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex.
 
 ```
 
