@@ -1,0 +1,621 @@
+jeff@SUSE-387793:~/9810 ()$ go tool pprof ctl.goroutine.prof
+File: controller
+Build ID: 8e4a9eaa132d21184fce30c3c89953b62cd85187
+Type: goroutine
+Time: Jan 26, 2025 at 5:09am (PST)
+Entering interactive mode (type "help" for commands, "o" for options)
+(pprof) top
+Showing nodes accounting for 190356, 100% of 190359 total
+Dropped 188 nodes (cum <= 951)
+Showing top 10 nodes out of 35
+      flat  flat%   sum%        cum   cum%
+    190356   100%   100%     190356   100%  runtime.gopark
+         0     0%   100%       2573  1.35%  github.com/neuvector/neuvector/controller/cache.(*groupRemovalEvent).Expire
+         0     0%   100%      47501 24.95%  github.com/neuvector/neuvector/controller/cache.AgentAdmissionRequest
+         0     0%   100%     128846 67.69%  github.com/neuvector/neuvector/controller/cache.CacheMethod.GetHostCount
+         0     0%   100%       9832  5.16%  github.com/neuvector/neuvector/controller/cache.CacheMethod.MatchK8sAdmissionRules
+         0     0%   100%      50075 26.31%  github.com/neuvector/neuvector/controller/cache.cacheMutexLock
+         0     0%   100%     140036 73.56%  github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+         0     0%   100%       9832  5.16%  github.com/neuvector/neuvector/controller/cache.matchK8sAdmissionRules
+         0     0%   100%      10176  5.35%  github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serve
+         0     0%   100%      10176  5.35%  github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serveK8s
+(pprof) traces
+File: controller
+Build ID: 8e4a9eaa132d21184fce30c3c89953b62cd85187
+Type: goroutine
+Time: Jan 26, 2025 at 5:09am (PST)
+-----------+-------------------------------------------------------
+    128846   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.CacheMethod.GetHostCount
+             main.(*ControllerAgentService).ReportConnections
+             github.com/neuvector/neuvector/share._ControllerAgentService_ReportConnections_Handler.func1
+             github.com/neuvector/neuvector/share/cluster.middlefunc
+             github.com/neuvector/neuvector/share._ControllerAgentService_ReportConnections_Handler
+             google.golang.org/grpc.(*Server).processUnaryRPC
+             google.golang.org/grpc.(*Server).handleStream
+             google.golang.org/grpc.(*Server).serveStreams.func2.1
+-----------+-------------------------------------------------------
+     47501   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireMutex
+             sync.(*Mutex).lockSlow
+             sync.(*Mutex).Lock (inline)
+             sync.(*RWMutex).Lock
+             github.com/neuvector/neuvector/controller/cache.cacheMutexLock
+             github.com/neuvector/neuvector/controller/cache.AgentAdmissionRequest
+             main.(*ControllerAgentService).RequestAdmission
+             github.com/neuvector/neuvector/share._ControllerAgentService_RequestAdmission_Handler.func1
+             github.com/neuvector/neuvector/share/cluster.middlefunc
+             github.com/neuvector/neuvector/share._ControllerAgentService_RequestAdmission_Handler
+             google.golang.org/grpc.(*Server).processUnaryRPC
+             google.golang.org/grpc.(*Server).handleStream
+             google.golang.org/grpc.(*Server).serveStreams.func2.1
+-----------+-------------------------------------------------------
+      9832   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.matchK8sAdmissionRules
+             github.com/neuvector/neuvector/controller/cache.CacheMethod.MatchK8sAdmissionRules
+             github.com/neuvector/neuvector/controller/rest.walkThruContainers
+             github.com/neuvector/neuvector/controller/rest.(*WebhookServer).validate
+             github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serveK8s
+             github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serveWithTimeStamps
+             github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serve
+             net/http.HandlerFunc.ServeHTTP
+             net/http.(*ServeMux).ServeHTTP
+             net/http.serverHandler.ServeHTTP
+             net/http.(*conn).serve
+-----------+-------------------------------------------------------
+      2573   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireMutex
+             sync.(*Mutex).lockSlow
+             sync.(*Mutex).Lock (inline)
+             sync.(*RWMutex).Lock
+             github.com/neuvector/neuvector/controller/cache.cacheMutexLock
+             github.com/neuvector/neuvector/controller/cache.(*groupRemovalEvent).Expire
+-----------+-------------------------------------------------------
+       744   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.CacheMethod.GetSystemConfig
+             main.(*ScanService).GetScannerSettings
+             github.com/neuvector/neuvector/share._ControllerScanService_GetScannerSettings_Handler.func1
+             github.com/neuvector/neuvector/share/cluster.middlefunc
+             github.com/neuvector/neuvector/share._ControllerScanService_GetScannerSettings_Handler
+             google.golang.org/grpc.(*Server).processUnaryRPC
+             google.golang.org/grpc.(*Server).handleStream
+             google.golang.org/grpc.(*Server).serveStreams.func2.1
+-----------+-------------------------------------------------------
+       344   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.matchK8sAdmissionRulesForPVC
+             github.com/neuvector/neuvector/controller/cache.CacheMethod.MatchK8sAdmissionRulesForPVC
+             github.com/neuvector/neuvector/controller/rest.(*WebhookServer).validate
+             github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serveK8s
+             github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serveWithTimeStamps
+             github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serve
+             net/http.HandlerFunc.ServeHTTP
+             net/http.(*ServeMux).ServeHTTP
+             net/http.serverHandler.ServeHTTP
+             net/http.(*conn).serve
+-----------+-------------------------------------------------------
+       260   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.automode_d2m_test_func
+             github.com/neuvector/neuvector/controller/cache.automode_test_func
+             github.com/neuvector/neuvector/controller/atmo.(*automode_ctx).prober
+             github.com/neuvector/neuvector/controller/atmo.(*task).Expire
+-----------+-------------------------------------------------------
+        53   runtime.gopark
+             runtime.netpollblock
+             internal/poll.runtime_pollWait
+             internal/poll.(*pollDesc).wait
+             internal/poll.(*pollDesc).waitRead (inline)
+             internal/poll.(*FD).Read
+             net.(*netFD).Read
+             net.(*conn).Read
+             crypto/tls.(*atLeastReader).Read
+             bytes.(*Buffer).ReadFrom
+             crypto/tls.(*Conn).readFromUntil
+             crypto/tls.(*Conn).readRecordOrCCS
+             crypto/tls.(*Conn).readRecord (inline)
+             crypto/tls.(*Conn).Read
+             bufio.(*Reader).Read
+             io.ReadAtLeast
+             io.ReadFull (inline)
+             golang.org/x/net/http2.readFrameHeader
+             golang.org/x/net/http2.(*Framer).ReadFrame
+             google.golang.org/grpc/internal/transport.(*http2Server).HandleStreams
+             google.golang.org/grpc.(*Server).serveStreams
+             google.golang.org/grpc.(*Server).handleRawConn.func1
+-----------+-------------------------------------------------------
+        53   runtime.gopark
+             runtime.selectgo
+             google.golang.org/grpc/internal/transport.(*controlBuffer).get
+             google.golang.org/grpc/internal/transport.(*loopyWriter).run
+             google.golang.org/grpc/internal/transport.NewServerTransport.func2
+-----------+-------------------------------------------------------
+        53   runtime.gopark
+             runtime.selectgo
+             google.golang.org/grpc/internal/transport.(*http2Server).keepalive
+-----------+-------------------------------------------------------
+        12   runtime.gopark
+             runtime.selectgo
+             github.com/neuvector/neuvector/controller/resource.(*kubernetes).startWatchResource.func1
+-----------+-------------------------------------------------------
+         9   runtime.gopark
+             runtime.selectgo
+             golang.org/x/net/http2.(*clientStream).writeRequest
+             golang.org/x/net/http2.(*clientStream).doRequest
+             golang.org/x/net/http2.(*ClientConn).roundTrip.func1
+-----------+-------------------------------------------------------
+         9   runtime.gopark
+             runtime.selectgo
+             google.golang.org/grpc/internal/grpcsync.(*CallbackSerializer).run
+-----------+-------------------------------------------------------
+         7   runtime.gopark
+             runtime.goparkunlock (inline)
+             sync.runtime_notifyListWait
+             sync.(*Cond).Wait
+             golang.org/x/net/http2.(*pipe).Read
+             golang.org/x/net/http2.transportResponseBody.Read
+             io.ReadAtLeast
+             io.ReadFull (inline)
+             github.com/neuvector/k8s.(*watcherPB).next
+             github.com/neuvector/k8s.(*watcherPB).Next
+             github.com/neuvector/k8s.(*Watcher).Next (inline)
+             github.com/neuvector/neuvector/controller/resource.(*kubernetes).watchResource
+-----------+-------------------------------------------------------
+         6   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.CacheMethod.GetSystemConfig
+             github.com/neuvector/neuvector/controller/rest.getAuthServersInOrder
+             github.com/neuvector/neuvector/controller/rest.handlerAuthLogin
+             github.com/julienschmidt/httprouter.(*Router).ServeHTTP
+             github.com/neuvector/neuvector/controller/rest.restLogger.ServeHTTP
+             net/http.serverHandler.ServeHTTP
+             net/http.(*conn).serve
+-----------+-------------------------------------------------------
+         4   runtime.gopark
+             runtime.netpollblock
+             internal/poll.runtime_pollWait
+             internal/poll.(*pollDesc).wait
+             internal/poll.(*pollDesc).waitRead (inline)
+             internal/poll.(*FD).Read
+             net.(*netFD).Read
+             net.(*conn).Read
+             net/http.(*persistConn).Read
+             bufio.(*Reader).fill
+             bufio.(*Reader).Peek
+             net/http.(*persistConn).readLoop
+-----------+-------------------------------------------------------
+         4   runtime.gopark
+             runtime.selectgo
+             net/http.(*persistConn).writeLoop
+-----------+-------------------------------------------------------
+         3   runtime.gopark
+             runtime.chansend
+             runtime.chansend1
+             main.(*orchConn).cbResourceWatcher
+             github.com/neuvector/neuvector/controller/resource.(*kubernetes).watchResource
+-----------+-------------------------------------------------------
+         2   runtime.gopark
+             runtime.chansend
+             runtime.chansend1
+             main.(*orchConn).cbResourceWatcher
+             github.com/neuvector/neuvector/controller/resource.(*kubernetes).watchResource
+-----------+-------------------------------------------------------
+         2   runtime.gopark
+             runtime.chanrecv
+             runtime.chanrecv2
+             github.com/neuvector/neuvector/controller/scheduler.(*Schd).taskWorker
+-----------+-------------------------------------------------------
+         2   runtime.gopark
+             runtime.netpollblock
+             internal/poll.runtime_pollWait
+             internal/poll.(*pollDesc).wait
+             internal/poll.(*pollDesc).waitRead (inline)
+             internal/poll.(*FD).Accept
+             net.(*netFD).accept
+             net.(*TCPListener).accept
+             net.(*TCPListener).Accept
+             crypto/tls.(*listener).Accept
+             net/http.(*Server).Serve
+             net/http.(*Server).ServeTLS
+             net/http.(*Server).ListenAndServeTLS
+             github.com/neuvector/neuvector/controller/rest.k8sWebhookRestServer.func1
+-----------+-------------------------------------------------------
+         2   runtime.gopark
+             runtime.selectgo
+             google.golang.org/grpc.(*ClientConn).WaitForStateChange
+             github.com/neuvector/neuvector/share/cluster.(*GRPCClient).monitorGRPCConnectivity
+-----------+-------------------------------------------------------
+         2   runtime.gopark
+             runtime.selectgo
+             database/sql.(*DB).connectionOpener
+-----------+-------------------------------------------------------
+         2   runtime.gopark
+             time.Sleep
+             github.com/neuvector/neuvector/share/cluster/watch.(*WatchPlan).shouldStop (inline)
+             github.com/neuvector/neuvector/share/cluster/watch.(*WatchPlan).Run
+             github.com/neuvector/neuvector/share/cluster.register
+             github.com/neuvector/neuvector/share/cluster.registerStoreUpdate
+-----------+-------------------------------------------------------
+         1   runtime.notetsleepg
+             os/signal.signal_recv
+             os/signal.loop
+-----------+-------------------------------------------------------
+         1   runtime.goroutineProfileWithLabels
+             runtime/pprof.runtime_goroutineProfileWithLabels
+             runtime/pprof.writeRuntimeProfile
+             runtime/pprof.writeGoroutine
+             runtime/pprof.(*Profile).WriteTo
+             github.com/neuvector/neuvector/share/utils.PerfProfile
+             github.com/neuvector/neuvector/share/utils.PerfSnapshot.func1
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.chanrecv
+             runtime.chanrecv1
+             github.com/neuvector/neuvector/controller/rest.(*tCrdRequestsMgr).crdQueueProc
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.chanrecv
+             runtime.chanrecv1
+             main.main
+             runtime.main
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.chanrecv
+             runtime.chanrecv2
+             github.com/neuvector/neuvector/share/utils.(*TimerWheel).Start.func1
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.chanrecv
+             runtime.chanrecv2
+             github.com/neuvector/neuvector/controller/ruleid.(*uuidPRuleCache).ruleIdTimerLoop
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.chanrecv
+             runtime.chanrecv2
+             github.com/neuvector/neuvector/controller/scan.imageWatcher
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.netpollblock
+             internal/poll.runtime_pollWait
+             internal/poll.(*pollDesc).wait
+             internal/poll.(*pollDesc).waitRead (inline)
+             internal/poll.(*FD).Read
+             net.(*netFD).Read
+             net.(*conn).Read
+             crypto/tls.(*atLeastReader).Read
+             bytes.(*Buffer).ReadFrom
+             crypto/tls.(*Conn).readFromUntil
+             crypto/tls.(*Conn).readRecordOrCCS
+             crypto/tls.(*Conn).readRecord (inline)
+             crypto/tls.(*Conn).Read
+             bufio.(*Reader).Read
+             io.ReadAtLeast
+             io.ReadFull (inline)
+             golang.org/x/net/http2.readFrameHeader
+             golang.org/x/net/http2.(*Framer).ReadFrame
+             golang.org/x/net/http2.(*clientConnReadLoop).run
+             golang.org/x/net/http2.(*ClientConn).readLoop
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.netpollblock
+             internal/poll.runtime_pollWait
+             internal/poll.(*pollDesc).wait
+             internal/poll.(*pollDesc).waitRead (inline)
+             internal/poll.(*FD).Accept
+             net.(*netFD).accept
+             net.(*TCPListener).accept
+             net.(*TCPListener).Accept
+             crypto/tls.(*listener).Accept
+             net/http.(*Server).Serve
+             net/http.(*Server).ServeTLS
+             net/http.(*Server).ListenAndServeTLS
+             github.com/neuvector/neuvector/controller/rest.StartRESTServer
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.netpollblock
+             internal/poll.runtime_pollWait
+             internal/poll.(*pollDesc).wait
+             internal/poll.(*pollDesc).waitRead (inline)
+             internal/poll.(*FD).Accept
+             net.(*netFD).accept
+             net.(*TCPListener).accept
+             net.(*TCPListener).Accept
+             google.golang.org/grpc.(*Server).Serve
+             github.com/neuvector/neuvector/share/cluster.(*GRPCServer).Start
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             net/http.(*persistConn).roundTrip
+             net/http.(*Transport).roundTrip
+             net/http.(*Transport).RoundTrip
+             net/http.send
+             net/http.(*Client).send
+             net/http.(*Client).do
+             net/http.(*Client).Do (inline)
+             github.com/neuvector/neuvector/share/cluster/api.(*Client).doRequest
+             github.com/neuvector/neuvector/share/cluster/api.(*KV).getInternal
+             github.com/neuvector/neuvector/share/cluster/api.(*KV).Get
+             github.com/neuvector/neuvector/share/cluster.(*consulMethod).Get
+             github.com/neuvector/neuvector/share/cluster.Get (inline)
+             github.com/neuvector/neuvector/controller/kv.getControlVersion
+             github.com/neuvector/neuvector/controller/kv.CheckFedKvVersion
+             github.com/neuvector/neuvector/controller/rest.handlerPingJointInternal
+             github.com/julienschmidt/httprouter.(*Router).ServeHTTP
+             github.com/neuvector/neuvector/controller/rest.restLogger.ServeHTTP
+             net/http.serverHandler.ServeHTTP
+             net/http.(*conn).serve
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             net/http.(*persistConn).roundTrip
+             net/http.(*Transport).roundTrip
+             net/http.(*Transport).RoundTrip
+             net/http.send
+             net/http.(*Client).send
+             net/http.(*Client).do
+             net/http.(*Client).Do (inline)
+             github.com/neuvector/neuvector/share/cluster/api.(*Client).doRequest
+             github.com/neuvector/neuvector/share/cluster/api.(*Session).Renew
+             github.com/neuvector/neuvector/share/cluster/api.(*Session).RenewPeriodic
+             github.com/neuvector/neuvector/share/cluster/api.(*Lock).Lock.func1
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             net/http.(*persistConn).roundTrip
+             net/http.(*Transport).roundTrip
+             net/http.(*Transport).RoundTrip
+             net/http.send
+             net/http.(*Client).send
+             net/http.(*Client).do
+             net/http.(*Client).Do (inline)
+             github.com/neuvector/neuvector/share/cluster/api.(*Client).doRequest
+             github.com/neuvector/neuvector/share/cluster/api.(*Status).Leader
+             github.com/neuvector/neuvector/share/cluster.(*consulMethod).GetLead
+             github.com/neuvector/neuvector/share/cluster.StartCluster.func2
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             net/http.(*persistConn).roundTrip
+             net/http.(*Transport).roundTrip
+             net/http.(*Transport).RoundTrip
+             net/http.send
+             net/http.(*Client).send
+             net/http.(*Client).do
+             net/http.(*Client).Do (inline)
+             github.com/neuvector/neuvector/share/cluster/api.(*Client).doRequest
+             github.com/neuvector/neuvector/share/cluster/api.(*Status).Leader
+             github.com/neuvector/neuvector/share/cluster.(*consulMethod).GetLead
+             github.com/neuvector/neuvector/share/cluster.GetClusterLead
+             github.com/neuvector/neuvector/share/cluster.RegisterLeadChangeWatcher.func2
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             github.com/neuvector/neuvector/controller/kv.(*CertManager).Run
+             github.com/neuvector/neuvector/controller/rest.initCertificates.func5
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             github.com/neuvector/neuvector/controller/kv.(*configHelper).startBackupThread.func1
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             github.com/neuvector/neuvector/controller/rest.CleanupSessCfgCache
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             github.com/neuvector/neuvector/controller/rest.k8sWebhookRestServer
+             github.com/neuvector/neuvector/controller/rest.AdmissionRestServer (inline)
+             github.com/neuvector/neuvector/controller/rest.restartWebhookServer
+             github.com/neuvector/neuvector/controller/rest.StartStopFedPingPoll.func1
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             github.com/neuvector/neuvector/controller/rest.k8sWebhookRestServer
+             github.com/neuvector/neuvector/controller/rest.CrdValidateRestServer
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             github.com/neuvector/neuvector/controller/rest.(*tCrdRequestsMgr).kvCrdEnqueueProc
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             github.com/neuvector/neuvector/controller/rest.FedPollingClient
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.selectgo
+             main.main.func4
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireMutex
+             sync.(*Mutex).lockSlow
+             sync.(*Mutex).Lock (inline)
+             sync.(*RWMutex).Lock
+             github.com/neuvector/neuvector/controller/cache.cacheMutexLock
+             github.com/neuvector/neuvector/controller/cache.addK8sPodEvent
+             github.com/neuvector/neuvector/controller/cache.startWorkerThread.func1
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireMutex
+             sync.(*Mutex).lockSlow
+             sync.(*Mutex).Lock (inline)
+             sync.(*RWMutex).Lock
+             github.com/neuvector/neuvector/controller/cache.graphMutexLock
+             github.com/neuvector/neuvector/controller/cache.syncGraphTx
+             github.com/neuvector/neuvector/controller/cache.GetSyncTxData
+             main.(*ControllerService).ReqSyncStream
+             github.com/neuvector/neuvector/share._ControllerCtrlService_ReqSyncStream_Handler
+             google.golang.org/grpc.(*Server).processStreamingRPC
+             google.golang.org/grpc.(*Server).handleStream
+             google.golang.org/grpc.(*Server).serveStreams.func2.1
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/kv.(*kvDispatcher).lockR (inline)
+             github.com/neuvector/neuvector/controller/kv.(*kvDispatcher).PutProfile
+             github.com/neuvector/neuvector/controller/kv.clusterHelper.duplicateProfileKey
+             github.com/neuvector/neuvector/controller/kv.clusterHelper.DuplicateNetworkKeyIfNotExist (inline)
+             github.com/neuvector/neuvector/controller/kv.clusterHelper.PutGroup
+             github.com/neuvector/neuvector/controller/cache.createLearnedGroup
+             github.com/neuvector/neuvector/controller/cache.groupWorkloadJoin
+             github.com/neuvector/neuvector/controller/cache.refreshLearnedGroupMembership
+             github.com/neuvector/neuvector/controller/cache.LeadChangeNotify
+             main.leadChangeHandler
+             github.com/neuvector/neuvector/share/cluster.RegisterLeadChangeWatcher.func2
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/kv.(*kvDispatcher).lockR (inline)
+             github.com/neuvector/neuvector/controller/kv.(*kvDispatcher).PutProfile
+             github.com/neuvector/neuvector/controller/kv.clusterHelper.duplicateProfileKey
+             github.com/neuvector/neuvector/controller/kv.clusterHelper.DuplicateNetworkKey (inline)
+             github.com/neuvector/neuvector/controller/kv.clusterHelper.PutProcessProfile
+             github.com/neuvector/neuvector/controller/cache.handleProfileReport
+             github.com/neuvector/neuvector/controller/cache.ProcReportBkgSvc
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.getWorkloadCache
+             github.com/neuvector/neuvector/controller/cache.CalculateGroupMetric
+             github.com/neuvector/neuvector/controller/cache.UpdateConnections
+             main.agentReportWorker
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.CacheMethod.GetWorkloadCount
+             github.com/neuvector/neuvector/controller/rest.handlerWorkloadListBase
+             github.com/neuvector/neuvector/controller/rest.handlerWorkloadListV2
+             github.com/julienschmidt/httprouter.(*Router).ServeHTTP
+             github.com/neuvector/neuvector/controller/rest.restLogger.ServeHTTP
+             net/http.serverHandler.ServeHTTP
+             net/http.(*conn).serve
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.CacheMethod.IsGroupMember
+             main.isGroupMember
+             github.com/neuvector/neuvector/controller/kv.(*kvDispatcher).purgeCustomGroupsByNodeGroups
+             github.com/neuvector/neuvector/controller/kv.(*kvDispatcher).WorkloadLeave
+             github.com/neuvector/neuvector/controller/cache.groupWorkloadLeave
+             github.com/neuvector/neuvector/controller/cache.eventHandlers.Trigger
+             github.com/neuvector/neuvector/controller/cache.workloadUpdate
+             github.com/neuvector/neuvector/controller/cache.ObjectUpdateHandler
+             github.com/neuvector/neuvector/share/cluster.storeUpdateCallback
+             github.com/neuvector/neuvector/share/cluster.registerStoreUpdate.func1
+             github.com/neuvector/neuvector/share/cluster/watch.(*WatchPlan).Run
+             github.com/neuvector/neuvector/share/cluster.register
+             github.com/neuvector/neuvector/share/cluster.registerStoreUpdate
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             runtime.goparkunlock (inline)
+             runtime.semacquire1
+             sync.runtime_SemacquireRWMutexR
+             sync.(*RWMutex).RLock (inline)
+             github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+             github.com/neuvector/neuvector/controller/cache.updateDlpRuleNetwork
+             github.com/neuvector/neuvector/controller/cache.startPolicyThread.func1
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             time.Sleep
+             github.com/neuvector/neuvector/share/cluster/watch.(*WatchPlan).shouldStop (inline)
+             github.com/neuvector/neuvector/share/cluster/watch.(*WatchPlan).Run
+             github.com/neuvector/neuvector/share/cluster.register
+             github.com/neuvector/neuvector/share/cluster.registerNodeUpdate
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             time.Sleep
+             github.com/neuvector/neuvector/share/cluster/watch.(*WatchPlan).shouldStop (inline)
+             github.com/neuvector/neuvector/share/cluster/watch.(*WatchPlan).Run
+             github.com/neuvector/neuvector/share/cluster.register
+             github.com/neuvector/neuvector/share/cluster.registerStateUpdate
+-----------+-------------------------------------------------------
+         1   runtime.gopark
+             time.Sleep
+             github.com/neuvector/neuvector/controller/cache.FileReportBkgSvc
+-----------+-------------------------------------------------------
+         1   syscall.Syscall6
+             os.(*Process).blockUntilWaitable
+             os.(*Process).wait
+             os.(*Process).Wait (inline)
+             os/exec.(*Cmd).Wait
+             github.com/neuvector/neuvector/share/cluster.(*consulMethod).Start
+-----------+-------------------------------------------------------
+(pprof) quit
+jeff@SUSE-387793:~/9810 ()$ cat data.json
+{
+ "RecordedAt": "2025-01-26T13:09:16.157645427Z",
+ "MemoryLimit": 6442450944,
+ "WorkingMemory": 109572132864,
+ "MemPercentage": 1700,
+ "ProfileLimit": 1,
+ "ProfilePercentage": 1700,
+ "Cid": "a47f288af60c8107802c69f24557cbc2b76bb1b9b8ff5c5b8941e175aa17ef0f",
+ "Lsof": [
+  "COMMAND     PID USER  FD   TYPE DEVICE  SIZE/OFF      NODE NAME",
+  "monitor       1 root txt    REG  0,108     60264   2139977 /usr/local/bin/monitor",
+  "opa           8 root txt    REG  0,108  44233928 281056112 /usr/local/bin/opa",
+  "consul    18427 root txt    REG  0,108 178948475 281056111 /usr/local/bin/consul",
+  "controlle 19402 root txt    REG  0,108  90283040   2139976 /usr/local/bin/controller",
+  ""
+ ],
+ "Ps": [
+  "%CPU   PID  PPID  PGID    VSZ   RSS  NI COMMAND",
+  " 0.0     1     0     1   2688   140   0 monitor",
+  " 0.0     8     1     8 1258660 12840  0 opa",
+  " 0.0  8741 19402 19402   7288  1964   0 ps",
+  "97.8 19402     1 19402 109303640 106127552 0 controller",
+  ""
+ ]
+}jeff@SUSE-387793:~/9810 ()$
