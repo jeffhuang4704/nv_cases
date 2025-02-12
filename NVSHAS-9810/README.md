@@ -1,5 +1,13 @@
 ## NVSHAS-9810 NeuVector controller not responding and UI not accessible
 
+
+## Table of Contents
+
+- [Section 1: Overview](#section-1-overview)
+- [Section 2: Design](#section-2-design)
+- [Section 3: Security](#section-3-security)
+
+
 ### Case description
 
 The customer reported that NeuVector UI is not loading. This is an installation running for a long time and this customer reported before that controller pods got stuck and it is required to scale down and scale up the controller deployment to recover from failure.
@@ -75,19 +83,26 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 
 </details>
 
+### full controller log
 
-<details><summary>controller#1 log</summary>
-
+[full controller#1 log](./materials/controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
 ```diff
 ! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86
-! Full log, see below link
 ```
 
-### full controller#1 log
 
-[full controller#1 log](./controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
+[full controller#2 log](./materials/controller_log/2-neuvector-controller-pod-854b7c7d46-nktdw.log)
+```diff
+! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86  <<=======change
+```
 
-### excerpt controller#1 log
+[full controller#3 log](./materials/controller_log/3-neuvector-controller-pod-854b7c7d46-rwcxp.log)
+```diff
+! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86  <<=======change
+```
+
+<details><summary>excerpt controller#1 log</summary>
+
 
 ```
 neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
@@ -295,7 +310,7 @@ func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmission
         ...... (omitted)
 	cacheMutexUnlock()
 
-	log.WithFields(log.Fields{"host": req.HostID, "id": req.ID, ...}).Info() ❓❓
+	log.WithFields(log.Fields{"host": req.HostID, "id": req.ID, ...}).Info() ❓❓ (never appear in log)
 
 	...... (omitted)
 }
