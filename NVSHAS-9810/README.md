@@ -3,12 +3,12 @@
 
 ## Table of Contents
 
-- [Section 1: Case description](#section-1-overview)
-- [Section 2: Materias we have](#section-2-design)
-- [Section 3: Controller#1 log excerpt](#section-2-design)
-- [Section 4: Controller#1 perf snapshot](#section-3-security)
-- [Section 5: Finding](#section-3-security)
-- [Section 6: Plan](#section-3-security)
+- [Section 1: Case description](#section-1-case-description)
+- [Section 2: Materias we have](#section-2-materias-we-have)
+- [Section 3: Controller#1 log excerpt](#section-3-controller1-log-excerpt)
+- [Section 4: Controller#1 perf snapshot](#section-4-controller1-perf-snapshot)
+- [Section 5: Finding](#section-5-finding)
+- [Section 6: Plan](#section-6-plan)
 
 ### Section 1: Case description
 
