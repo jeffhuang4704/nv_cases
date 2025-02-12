@@ -103,6 +103,8 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 
 </details>
 
+### excerpt log (controller#1)
+
 <details><summary>excerpt controller#1 log</summary>
 
 ```
@@ -174,7 +176,7 @@ neuvector-controller-pod-854b7c7d46-fhw25.log (node-#1)
 
 ```
 
-### Perf Snapshots
+### Perf Snapshots (controller#1)
 
 The controller process exits one minute after the performance snapshot is taken. Therefore, the snapshot below should be valuable.
 The diagram below shows these snapshot timestamps, with the last one indicating that memory usage reached 109GB.
