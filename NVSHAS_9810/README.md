@@ -330,8 +330,10 @@ Time: Jan 26, 2025 at 5:09am (PST)
 
 </details>
 
-[memory prof web view](./materials/controller_inuse_space.html)
-[goroutins prof web view](./materials/controller_goroutine.html)
+
+* prof web view 
+- [memory prof web view](./materials/controller_inuse_space.html)
+- [goroutins prof web view](./materials/controller_goroutine.html)
 
 ### Section 5: Finding
 
