@@ -296,6 +296,7 @@ From the goroutine pprof file, it seems cacheMutexLock is quite suspicious.
 
 If we look the initial several hours of log, a repeating log entry "cache.AgentAdmissionRequest: Receive connect request" shows 28000+ times.
 
+```
 
 2025-01-26T13:09:02.525|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0009381:6596a768-fb27-457f-8c3f-a37b220da290 id=4cafd2b5afb5d9f0c652783ac7c8b5a7e41295b9220d85687a880d9db227e2db
 2025-01-26T13:09:02.774|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0003320:df3b39de-ca8e-4378-9092-665947d3f873 id=24f3f72d9753c44038a6de5b0a1f9c2a0daca6775e2e4373f04f2759504cb469
@@ -303,6 +304,7 @@ If we look the initial several hours of log, a repeating log entry "cache.AgentA
 2025-01-26T13:09:04.439|INFO|CTL|cache.AgentAdmissionRequest: Receive connect request - host=q0003322:a38626a4-a970-431f-b66d-465829643591 id=91221f7ce111344774649459e3dacaace11229cb34483091353e72fd020f6bd5
 .... 🟢 (28034 hits) "cache.AgentAdmissionRequest: Receive connect request", then different kind of error start to occur
 
+```
 
 #### AgentAdmissionRequest()
 
@@ -310,14 +312,14 @@ If we look the initial several hours of log, a repeating log entry "cache.AgentA
 func AgentAdmissionRequest(req *share.CLUSAdmissionRequest) *share.CLUSAdmissionResponse {
 	log.WithFields(log.Fields{
 		"host": req.HostID, "id": req.ID,
-	}).Info("Receive connect request")      👈
+	}).Info("Receive connect request")      ✔️
 
 	
 	cacheMutexLock()
         ...... (omitted)
 	cacheMutexUnlock()
 
-	log.WithFields(log.Fields{"host": req.HostID, "id": req.ID, "allowed": allowConnect, "online": onlineEnforcers}).Info() ❓❓
+	log.WithFields(log.Fields{"host": req.HostID, "id": req.ID, ...}).Info() ❓❓
 
 	...... (omitted)
 }
