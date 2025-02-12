@@ -89,18 +89,18 @@ neuvector-updater-pod-28975680-rjlv2                 0/1     Completed          
 
 [full controller#1 log](./materials/controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
 ```diff
-! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86
+! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45
 ```
 
 
 [full controller#2 log](./materials/controller_log/2-neuvector-controller-pod-854b7c7d46-nktdw.log)
 ```diff
-! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86  <<=======change
+! Time range: from 2025-02-03T09:16:11 - 2025-02-03T09:24:52  
 ```
 
 [full controller#3 log](./materials/controller_log/3-neuvector-controller-pod-854b7c7d46-rwcxp.log)
 ```diff
-! Time range: from 2025-01-26T04:50:44 to 2025-02-03T09:24:45.86  <<=======change
+! Time range: from 2025-01-27T14:46:47 - 2025-02-03T09:24:55
 ```
 
 </details>
@@ -289,7 +289,7 @@ Dropped 188 nodes (cum <= 951)
 ```
 
 ```
-(pprof) traces
+(pprof) traces    //** only show the top 2 here, see [full goroutine trace stack] link above for full goroutines
 File: controller
 Build ID: 8e4a9eaa132d21184fce30c3c89953b62cd85187
 Type: goroutine
@@ -349,7 +349,7 @@ Time: Jan 26, 2025 at 5:09am (PST)
 
 ### Section 5: Finding
 
-If we examine the first several hours of logs, a repeating log entry `cache.AgentAdmissionRequest: Receive connect request` appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex.
+If we examine the first several hours of logs, a repeating log entry `cache.AgentAdmissionRequest: Receive connect request` appears more than 28,000 times. It only shows the first part of the log before acquiring the mutex, with no entries after releasing it. This indicates that all of them are stuck while acquiring the mutex. Most of the goroutines are blocked during this operation.
 
 <details><summary>log</summary>
 
