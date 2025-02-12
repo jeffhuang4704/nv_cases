@@ -107,7 +107,7 @@ Controller log files (time range)
 
 ### full controller#1 log
 
-    [full controller#1 log](./controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
+[full controller#1 log](./controller_log/1-neuvector-controller-pod-854b7c7d46-fhw25.log)
 
 ### excerpt controller#1 log
 
@@ -196,6 +196,53 @@ The diagram below shows these snapshot timestamps, with the last one indicating 
   <img src="./materials/controller-node1-perf1.png" width="90%">
 </p>
 
+#### goroutines pprof
+
+```
+jeff@SUSE-387793:~/9810 ()$ go tool pprof -text ctl.goroutine.prof
+File: controller
+Build ID: 8e4a9eaa132d21184fce30c3c89953b62cd85187
+Type: goroutine
+Time: Jan 26, 2025 at 5:09am (PST)
+Showing nodes accounting for 190356, 100% of 190359 total
+Dropped 188 nodes (cum <= 951)
+      flat  flat%   sum%        cum   cum%
+    190356   100%   100%     190356   100%  runtime.gopark     // these goroutines that were parked at the time of profiling
+         0     0%   100%       2573  1.35%  github.com/neuvector/neuvector/controller/cache.(*groupRemovalEvent).Expire
+         0     0%   100%      47501 24.95%  github.com/neuvector/neuvector/controller/cache.AgentAdmissionRequest
+         0     0%   100%     128846 67.69%  github.com/neuvector/neuvector/controller/cache.CacheMethod.GetHostCount
+         0     0%   100%       9832  5.16%  github.com/neuvector/neuvector/controller/cache.CacheMethod.MatchK8sAdmissionRules
+         0     0%   100%      50075 26.31%  github.com/neuvector/neuvector/controller/cache.cacheMutexLock
+         0     0%   100%     140036 73.56%  github.com/neuvector/neuvector/controller/cache.cacheMutexRLock
+         0     0%   100%       9832  5.16%  github.com/neuvector/neuvector/controller/cache.matchK8sAdmissionRules
+         0     0%   100%      10176  5.35%  github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serve
+         0     0%   100%      10176  5.35%  github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serveK8s
+         0     0%   100%      10176  5.35%  github.com/neuvector/neuvector/controller/rest.(*WebhookServer).serveWithTimeStamps
+         0     0%   100%      10176  5.35%  github.com/neuvector/neuvector/controller/rest.(*WebhookServer).validate
+         0     0%   100%       9832  5.16%  github.com/neuvector/neuvector/controller/rest.walkThruContainers
+         0     0%   100%     128846 67.69%  github.com/neuvector/neuvector/share._ControllerAgentService_ReportConnections_Handler
+         0     0%   100%     128846 67.69%  github.com/neuvector/neuvector/share._ControllerAgentService_ReportConnections_Handler.func1
+         0     0%   100%      47501 24.95%  github.com/neuvector/neuvector/share._ControllerAgentService_RequestAdmission_Handler
+         0     0%   100%      47501 24.95%  github.com/neuvector/neuvector/share._ControllerAgentService_RequestAdmission_Handler.func1
+         0     0%   100%     177091 93.03%  github.com/neuvector/neuvector/share/cluster.middlefunc
+         0     0%   100%     177092 93.03%  google.golang.org/grpc.(*Server).handleStream
+         0     0%   100%     177091 93.03%  google.golang.org/grpc.(*Server).processUnaryRPC
+         0     0%   100%     177092 93.03%  google.golang.org/grpc.(*Server).serveStreams.func2.1
+         0     0%   100%     128846 67.69%  main.(*ControllerAgentService).ReportConnections
+         0     0%   100%      47501 24.95%  main.(*ControllerAgentService).RequestAdmission
+         0     0%   100%      10176  5.35%  net/http.(*ServeMux).ServeHTTP
+         0     0%   100%      10184  5.35%  net/http.(*conn).serve
+         0     0%   100%      10176  5.35%  net/http.HandlerFunc.ServeHTTP
+         0     0%   100%      10184  5.35%  net/http.serverHandler.ServeHTTP
+         0     0%   100%     190121 99.87%  runtime.goparkunlock (inline)
+         0     0%   100%     190114 99.87%  runtime.semacquire1
+         0     0%   100%      50076 26.31%  sync.(*Mutex).Lock (inline)
+         0     0%   100%      50076 26.31%  sync.(*Mutex).lockSlow
+         0     0%   100%      50076 26.31%  sync.(*RWMutex).Lock
+         0     0%   100%     140038 73.57%  sync.(*RWMutex).RLock (inline)
+         0     0%   100%      50076 26.31%  sync.runtime_SemacquireMutex
+         0     0%   100%     140038 73.57%  sync.runtime_SemacquireRWMutexR
+```
 
 </details>
 
